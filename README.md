@@ -1,13 +1,13 @@
-# Gerenciador de tarefas (Next.js 15 + tRPC)
+# Task manager (Next.js 15 + tRPC)
 
-Aplicação de demonstração: CRUD de tarefas em memória, API via **tRPC**, interface em **Next.js 15** (App Router) com **SSR** na listagem e **infinite scroll** para carregar mais itens no cliente.
+Demo app: in-memory task CRUD, **tRPC** API, **Next.js 15** (App Router) UI with **SSR** on the list and **infinite scroll** to load more items on the client.
 
-## Requisitos
+## Requirements
 
-- Node.js 20+ (recomendado)
+- Node.js 20+ (recommended)
 - npm
 
-## Como executar
+## How to run
 
 ```bash
 cd task-manager
@@ -15,27 +15,27 @@ npm install
 npm run dev
 ```
 
-Abra [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000).
 
-- **Lista** (`/`): primeira página de tarefas renderizada no servidor; rolagem carrega mais blocos.
-- **Nova tarefa** (`/tarefas/nova`): formulário com validação de título no cliente e no servidor.
-- **Editar** (`/tarefas/[id]/editar`): mesma tarefa carregada no servidor a partir do armazenamento em memória.
+- **List** (`/`): first page of tasks rendered on the server; scrolling loads more blocks.
+- **New task** (`/task/new`): form with title validation on the client and on the server.
+- **Edit** (`/task/[id]/editar`): same task loaded on the server from in-memory storage.
 
-Build de produção:
+Production build:
 
 ```bash
 npm run build
 npm start
 ```
 
-## Decisões principais
+## Key decisions
 
-1. **tRPC + `superjson`**: tipagem ponta a ponta e suporte a `Date` na serialização.
-2. **`appRouter.createCaller` no servidor**: a página inicial usa a mesma lógica do endpoint `task.list`, sem HTTP extra, cumprindo o SSR pedido.
-3. **Armazenamento em `src/server/db/tasks.ts`**: um array no processo Node; reiniciar o servidor zera os dados (esperado para o desafio).
-4. **Infinite scroll**: `task.list` aceita `limit` e `cursor` (id do último item da página anterior); o cliente usa `useInfiniteQuery` e `IntersectionObserver`.
-5. **Erros**: validação com Zod nas mutations; `TRPCError` com mensagens claras para atualizar/excluir tarefa inexistente.
+1. **tRPC + `superjson`**: end-to-end typing and `Date` support in serialization.
+2. **`appRouter.createCaller` on the server**: the home page reuses the same logic as the `task.list` endpoint, with no extra HTTP, satisfying the requested SSR.
+3. **Storage in `src/server/db/tasks.ts`**: a Node process in-memory array; restarting the server clears data (intended for this challenge).
+4. **Infinite scroll**: `task.list` accepts `limit` and `cursor` (id of the last item from the previous page); the client uses `useInfiniteQuery` and `IntersectionObserver`.
+5. **Errors**: Zod validation on mutations; `TRPCError` with clear messages when updating or deleting a non-existent task.
 
-## Entrega em repositório público
+## Public repository delivery
 
-Não inclua credenciais, tokens ou dados pessoais reais. Este projeto não usa variáveis de ambiente secretas.
+Do not include credentials, tokens, or real personal data. This project does not use secret environment variables.
